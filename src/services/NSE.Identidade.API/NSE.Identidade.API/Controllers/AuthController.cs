@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NSE.Identidade.API.Extensions;
 using NSE.Identidade.API.Models;
+using NSE.WebAPI.Core.Identidade;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -33,6 +34,9 @@ namespace NSE.Identidade.API.Controllers
         [HttpPost("nova-conta")]
         public async Task<ActionResult> Register(UsuarioRegistro usuario)
         {
+            //teste tratamento de exceptions
+            return new StatusCodeResult(403);
+
             if (!ModelState.IsValid) return CustomResponse();
 
             var user = new IdentityUser
@@ -60,6 +64,9 @@ namespace NSE.Identidade.API.Controllers
         [HttpPost("autenticar")]
         public async Task<ActionResult> Login(UsuarioLogin login)
         {
+            ////teste tratamento de exceptions
+            //return new StatusCodeResult(401);
+
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var result = await _signInManager.PasswordSignInAsync(login.Email, login.Senha, false, true);
